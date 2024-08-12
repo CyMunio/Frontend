@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyMunio</title>
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Threejs CDN links-->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bod">
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="./Assets/logo.jpg" alt="">
+            <h2>  CyMunio <br>
+               <span>Where Security Meets Innovation</span> 
+            </h2>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="index.html">Features</a></li>
+            <li><a href="#ser">Services</a></li>
+            <li><a href="#">Solutions</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <div class="login-signup">
+            <a href="profile.html">Login/Signup</a>
+        </div>
+    </nav>
+
+
+    <div class="us">
+    
+        <div class="exo">
+            <h2 id="typewriter2">About us /</h2>
+            <h4><a href="index.html">Home</a></h4>
+        </div>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #2a27277d; margin: 20px 70px;">
+    <div class="whos">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#" class="modal-trigger" data-modal="modal1">About<i class="fas fa-arrow-right"></i> </a></li>
+                <li><a href="#" class="modal-trigger" data-modal="modal2">Services<i class="fas fa-arrow-right"></i></a></li>
+                <li><a href="#" class="modal-trigger" data-modal="modal3">Solutions<i class="fas fa-arrow-right"></i></a></li>
+                <li><a href="#" class="modal-trigger" data-modal="modal4">How to<i class="fas fa-arrow-right"></i></a></li>
+            </ul>
+        </div>
+                   
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Welcome to CyMunio</h3>
+
+                <div class="inside">
+                    <div class="mejja">
+                        <i class="fa-solid fa-robot"></i>
+                        <h2>AI</h2>
+                        <p>
+                            Here at CyMunio, we leverage advanced AI models to enhance cybersecurity by analyzing network traffic data in real-time. Our AI-driven approach allows us to detect and respond
+                             to threats swiftly by identifying unusual patterns and anomalies in network behavior.
+                        </p>
+
+                    </div>
+                    <div class="mejja">
+                        <i class="fa-brands fa-hive"></i>
+                        <h2>Blockchain Storage</h2>
+                        <p>
+                            By employing machine learning algorithms such as anomaly detection and classification, we categorize potential vulnerabilities into severe, average, 
+                            and mild threats, ensuring that our response is both precise and effective.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="inside">
+                    <div class="mejja">
+                        <i class="fa-brands fa-unity"></i>
+                        <h2>3D Visualization</h2>
+                        <p>
+                            By employing machine learning algorithms such as anomaly detection and classification, we categorize potential vulnerabilities into severe, average, 
+                            and mild threats, ensuring that our response is both precise and effective.
+                        </p>
+                    </div>
+                    <div id="go" class="mejja">
+                        <i class="fa-solid fa-shield"></i>
+                        <h2>Detect Vulnerabilities</h2>
+                        <p>By employing machine learning algorithms such as anomaly detection and classification, we categorize potential vulnerabilities into severe, average, 
+                            and mild threats, ensuring that our response is both precise and effective.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Enjoy These benefits!</h2>
+
+            </div>
+        </div>
+
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+            </div>
+        </div>
+        <div id="modal4" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+            </div>
+        </div>
+
+    </div>
+
+
+
+            <!-- ////////footer -->
+            <div class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h2>Navigation</h2>
+                        <ul>
+                            <li><a href="#link1">Login/Signup</a></li>
+                            <li><a href="#link2">Home</a></li>
+                            <li><a href="#link3">Services</a></li>
+                            <li><a href="#link4">How to</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h2>Our Services</h2>
+                        <ul>
+                            <li><a href="#link1">Login/Signup</a></li>
+                            <li><a href="#link2">Home</a></li>
+                            <li><a href="#link3">Services</a></li>
+                            <li><a href="#link4">How to</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h2>Have a Question?</h2>
+                        <form action="your-feedback-endpoint" method="POST">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+             <!-- ////////footer ends -->
+
+    <!-- JavaScript links -->
+   <script src="anim.js"></script>
+</body>
+</html>
