@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         window.addEventListener("scroll", onScroll);
-        onScroll();
+        onScroll(); // Initial check in case the element is already in view
     }
 
     // Modal functionality
@@ -29,9 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const modals = document.querySelectorAll(".modal");
     const closes = document.querySelectorAll(".close");
 
-    // Display the first modal by default
-    const firstModal = document.getElementById(modalTriggers[0].getAttribute("data-modal"));
-    firstModal.style.display = "block";
+    if (modalTriggers.length > 0) {
+        // Display the first modal by default if there are modal triggers
+        const firstModalId = modalTriggers[0].getAttribute("data-modal");
+        const firstModal = document.getElementById(firstModalId);
+        if (firstModal) {
+            firstModal.style.display = "block";
+        }
+    }
 
     modalTriggers.forEach(trigger => {
         trigger.addEventListener("click", function (e) {

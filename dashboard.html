@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyMunio Client Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-gauge@0.3.0/dist/chartjs-chart-gauge.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body class="nop">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+        <div class="logo"><a href="index.html">CyMunio</a></div>
+        <div class="client-name">Client Name</div>
+        <button class="logout-btn">Logout</button>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidbar">
+            <ul>
+                <li><a href="#ovw">Overview</a></li>
+                <li><a href="#metrics">Metrics</a></li>
+                <li><a href="#networkVisualization">3D Network Visualization</a></li>
+                <li><a href="#ipinfo">IP Information</a></li>
+                <!-- ////////// -->
+                <li>
+                    <a href="#" id="toggleHealthCheck">Health Checks</a>
+
+
+                </li>
+                <!-- //////////// -->
+                <li><a href="#alerts">Alerts</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </nav>
+
+                    <div id="health-checks">
+                        <h2>Health Checks</h2>
+                        <p><strong>Percentage Healthy:</strong> 95%</p>
+                        <p><strong>Actionable Insights:</strong> Offers recommendations for maintaining system health and performance.</p>
+                        
+                        <h3>Network Health Overview</h3>
+                        <p>Loading...</p>
+                        <h3>Detailed Health Check Results</h3>
+                        <p>Loading...</p>
+                        <h3>Recommendations for Improvement</h3>
+                        <p>Loading...</p>
+
+                         <!-- System Health Overview Section -->
+                    <div class="system-health">
+                        <h2>System Health Overview</h2>
+                        <p><strong>Uptime:</strong>Loading...</p>
+                        <p><strong>Performance Metrics:</strong>Loading... </p>
+                        <p><strong>Scheduled Maintenance:</strong>Loading...</p>
+                        <p><strong>Issues Detected:</strong>Loading... </p>
+                        <p><strong>Status Message:</strong>Loading...</p>
+                    </div>
+                        </div>
+        
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- Security Status Summary -->
+            <section class="security-status">
+                <h2>Security Status Summary</h2>
+                <div class="status-indicator">
+                    <span class="status-label">Overall Status:</span>
+                    <div class="status-badge good" id="securityStatus">Secure</div>
+                </div>
+                <div class="status-details">
+                    <div class="tt" >Total Vulnerabilities Detected: <br> <span id="totalVulnerabilities">Loading...</span></div>
+                    <div class="tt">Recent Security Events: <br> <span id="recentEvents">Loading...</span></div>
+                    <div class="tt">Total Anomalies Detected: <br> <span id="totalAnomalies">Loading...</span></div>
+                    <div class="tt">Protection Status: <br> <span class="active" id="protectionStatus">Loading...</span></div>
+                </div>
+            </section>
+            <div class="tails">
+                <!-- ////////////////////////////// -->
+                <div class="meg">
+                    <h5>Welcome back,</h5>
+                    <h1>Organization/Name</h1>
+                    <h5>Glad to see you again!</h5>
+                    <h5>Ask me anyhting.</h5>
+
+                    <button>Tap to Start<i class="fas fa-arrow-right"></i> </button>
+                </div>
+                <!-- //////////////////////////// -->
+                <div class="meg">
+                    <div class="compliance-status">
+                        <h2>Regulatory Compliance Status</h2>
+                        <div class="compliance-visual">
+                            <div class="gauge-container">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                        <button id="toggleAuditTrail">More <i class="fas fa-arrow-right"></i></button>
+                        <!-- Audit Trail Section -->
+                        <div class="audit-trail hidden">
+                            <h3>Audit Trail</h3>
+                            <ul class="audit-list">
+                                <li><strong>Date:</strong> 2024-08-28 | <strong>Action:</strong> Security Policy Update | <strong>Performed by:</strong> Admin</li>
+                                <li><strong>Date:</strong> 2024-08-25 | <strong>Action:</strong> User Access Review | <strong>Performed by:</strong> Compliance Officer</li>
+                                <li><strong>Date:</strong> 2024-08-20 | <strong>Action:</strong> Data Encryption Check | <strong>Performed by:</strong> IT Department</li>
+                                <!-- Add more log entries as needed -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- /////////////////////////////// -->
+                <div class="meg">
+                    <div class="incident-response">
+                        <h2>Incident Response Status</h2>
+                    
+                        <!-- Current Incidents -->
+                        <div class="current-incidents">
+                            <h3>Current Incidents</h3>
+                            <ul>
+                                <li>Active Incident 1: Under Investigation</li>
+                                <li>Active Incident 2: Resolved</li>
+                            </ul>
+                        </div>
+                    
+                        <!-- Response Actions -->
+                        <div class="response-actions">
+                            <h3>Response Actions</h3>
+                            <ul>
+                                <li><strong>Incident 1:</strong> Mitigated by John Doe at 10:30 AM, 2024-08-28</li>
+                                <li><strong>Incident 2:</strong> Resolved by Jane Smith at 2:45 PM, 2024-08-28</li>
+                            </ul>
+                        </div>
+                    
+                        <!-- Incident Response Plan Overview -->
+                        <div class="response-plan">
+                            <h3>Incident Response Plan Overview</h3>
+                            <p><strong>Key Contacts:</strong> John Doe (Security Lead), Jane Smith (IT Manager)</p>
+                            <p><strong>Response Procedures:</strong></p>
+                            <ol>
+                                <li>Identify and assess the incident type.</li>
+                                <li>Notify key contacts and affected teams.</li>
+                                <li>Contain and mitigate the incident.</li>
+                                <li>Conduct post-incident analysis and report.</li>
+                            </ol>
+                        </div>
+                    
+                        <!-- Recent Incidents -->
+                        <div class="recent-incidents">
+                            <h3>Recent Incidents</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Incident</th>
+                                        <th>Status</th>
+                                        <th>Lessons Learned</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Unauthorized Access Attempt</td>
+                                        <td>Resolved</td>
+                                        <td>Improved access control measures implemented.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Malware Detected</td>
+                                        <td>Under Investigation</td>
+                                        <td>Strengthening endpoint protection.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- //////////////////////////////// -->
+            </div>
+            <!-- Key Metrics Overview -->
+            <section class="metrics-overview" id="metrics">
+                <h2>Key Metrics Overview</h2>
+                
+                <div class="outerr">
+                    <div class="innerr2">
+                        <div id="networkVisualization"></div>
+                        <section class="ipinfo" id="ipinfo">
+                            <h2>IP Information</h2>
+                            <div class="ipinfo-details">
+                                <p><strong>IP Address:</strong> <span id="ipAddress">Loading...</span></p>
+                                <p><strong>Location:</strong> <span id="location">Loading...</span></p>
+                                <p><strong>Organization:</strong> <span id="organization">Loading...</span></p>
+                                <p><strong>Hostname:</strong> <span id="hostname">Loading...</span></p>
+                            </div>
+                        </section>
+                        
+                    </div>
+                      <!-- IP Information -->
+                    
+            <div class="innerr">
+                <div class="metric-item">
+                    <h3>Vulnerability Detection</h3>
+                    <p>Description: Analysis of detected vulnerabilities.</p>
+                    <div class="metric-chart">
+                        <canvas id="vulnerabilityTrends"></canvas>
+                    </div>
+                    <div class="metric-status">
+                        <span>Severity Level:</span>
+                        <div class="status-badge yellow">Moderate</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <h3>Anomaly Detection</h3>
+                    <p>Description: Monitoring unusual network activities.</p>
+                    <div class="metric-chart">
+                        <canvas id="anomalyTrends"></canvas>
+                    </div>
+                    <div class="metric-status">
+                        <span>Impact:</span>
+                        <div class="status-badge red">Critical</div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </section>
+            <div class="innerr3">
+                <!-- Alerts and Notifications -->
+                <section class="alerts-section" id="alerts">
+                    <h2>Recent Alerts</h2>
+                    <div class="alert-item critical">
+                        <span>Type: Unauthorized Access Attempt</span>
+                        <span>Severity: Critical</span>
+                        <span>Timestamp: 2024-08-20 10:30:00</span>
+                    </div>
+                    <div class="alert-item high">
+                        <span>Type: Malware Detected</span>
+                        <span>Severity: High</span>
+                        <span>Timestamp: 2024-08-20 09:15:00</span>
+                    </div>
+                    <div class="alert-item medium">
+                        <span>Type: Phishing Attempt</span>
+                        <span>Severity: Medium</span>
+                        <span>Timestamp: 2024-08-19 14:05:00</span>
+                    </div>
+                </section>
+                </div>
+        </main>
+    </div>
+    
+    <script src="dashboard.js" defer></script>
+</body>
+</html>
