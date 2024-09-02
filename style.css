@@ -1,5 +1,5 @@
 body{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Roboto Mono', 'Source Code Pro', 'Anonymous Pro', 'Hack', 'OCR-A', 'OCR-B', sans-serif;
     margin: 0;
     padding: 0;
     font-size: 15px;
@@ -10,7 +10,7 @@ body{
 } */
 .bod{
     background: url('./Assets/back.jpeg') no-repeat center center fixed;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(1px);
     background-size: cover;
 }
 .navbar {
@@ -37,10 +37,12 @@ body{
     padding-left: 10px;
 }
 .logo img{
-    height: 50px;
+    height: 60px;
     width: 50px;
 }
-
+.logo{
+    margin-left: 15px;
+}
 .navbar .nav-links {
     display: flex;
     list-style: none;
@@ -62,8 +64,8 @@ body{
     margin-left: 8px;
 }
 .navbar .nav-links li:hover{
-   background-color: #0f969c;
-   border-radius: 14px;
+   border-radius: 10px;
+   box-shadow: 1px 10px 12px #00bfae;
 }
 .navbar .login-signup {
     margin-left: 10px;
@@ -88,7 +90,7 @@ body{
 .one{
     display: flex;
     height: 700px;
-    margin: 40px;
+    margin: 20px;
     background-color: #2c3e5043;
     border-radius: 8px;
     color: black;
@@ -562,6 +564,39 @@ body{
     height: 80px;
     border-radius: 60%;
 }
+/* Hide the auth-container initially */
+#auth-container {
+    display: none; /* Hides the container */
+    opacity: 0; /* Makes it invisible */
+    transition: opacity 0.5s ease-in-out; /* Smooth transition */
+    position: absolute;
+    right: 0;
+    margin: 20px;
+}
+
+#auth-container.show {
+    display: block; /* Makes it visible */
+    opacity: 1; /* Makes it visible */
+    
+}
+#drop{
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #d8e6e582;
+    box-shadow: 1px 9px 12px #00bfae;
+    font-weight: bold;
+    border: none;
+}
+#drop:hover{
+    background-color: #00bfafc0;
+   color: #ffffff;
+    box-shadow: 1px 10px 12px #fcffff;
+}
+#status{
+    background-color: #00000036;
+    color: white;
+    border-radius: 8px;
+}
 .form-container {
     background: #fff;
     border-radius: 10px;
@@ -589,7 +624,7 @@ body{
 }
 
 .form-switcher button.active {
-    background-color: #6c63ff;
+    background-color: #0f969c;
     color: #fff;
 }
 
@@ -614,7 +649,7 @@ body{
     width: 100%;
     padding: 10px;
     border: none;
-    background-color: #6c63ff;
+    background-color: #0f969c;
     color: #fff;
     font-size: 16px;
     border-radius: 5px;
@@ -623,7 +658,8 @@ body{
 }
 
 .form-button:hover {
-    background-color: #5a52e5;
+    background: linear-gradient(90deg, #2cb9b7 5%, #000 49%, #0f969c9c 100%);
+    
 }
 
 .hidden {
@@ -1262,4 +1298,237 @@ canvas {
     display: block;
     width: 100% !important;
     height: 100% !important;
+}
+
+/* /////////////////////////// */
+/* //////////////////////// */
+.conter {
+    display: flex;
+}
+
+.debar {
+    width: 100px;
+    margin: 10px;
+    background-color: #2c3e50;
+    border-radius: 18px;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+}
+
+
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    margin: 10px 0;
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-nav ul li {
+    margin: 15px 0;
+}
+
+.side-nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.side-nav ul li a:hover {
+    background-color: #34495e;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#theme-toggle {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#theme-toggle:hover {
+    background-color: #c0392b;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.dark-theme {
+    background-color: #1c1c1c;
+    color: #ecf0f1;
+}
+
+.dark-theme .sidebar {
+    background-color: #2c3e50;
+}
+
+.dark-theme button {
+    background-color: #e74c3c;
+}
+.pic{
+    background: url('./Assets/back.jpeg') no-repeat center center fixed;
+    /* backdrop-filter: blur(3px); */
+    background-size: cover;
+}
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+}
+.profile-settings {
+    width: 90%;
+    margin: 10px;
+    background-color: #1e1e1e3f;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h2 {
+    margin: 0;
+    color: #000000; /* Cybersecurity themed color */
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-pic-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic-section img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 2px solid #00bfae; /* Cybersecurity themed color */
+}
+
+.profile-pic-section input[type="file"] {
+    display: none;
+}
+
+.upload-btn {
+    background-color: #00bfae;
+    margin: 10px;
+    padding: 10px;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    
+    background: linear-gradient(90deg, #2cb9b7 5%, #000 49%, #0f969c9c 100%);
+}
+
+.profile-info-section {
+    margin-top: 20px;
+}
+
+.profile-info-section h3 {
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2e2e2e33;
+    color: #ffffff;
+}
+
+.submit-btn {
+    background-color: #00bfae; /* Cybersecurity themed color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #008c8c; /* Slightly darker shade */
+}
+
+.admin-dashboard {
+    max-width: 1000px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#user-table th, #user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#user-table th {
+    background-color: #f2f2f2;
+}
+
+.suspend-btn {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.suspend-btn:hover {
+    background-color: #d32f2f;
 }

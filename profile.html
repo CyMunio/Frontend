@@ -3,19 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arweave CSV Upload</title>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/arweave/bundles/web.bundle.min.js"></script>
 </head>
-<body>
-  <a href="index.html">home</a>
-  <div id="upload-container">
-    <button id="connectWalletBtn">Connect Wallet</button>
-    <form id="uploadForm" class="hidden">
-        <input type="file" id="csvFileInput" accept=".csv" required>
-        <button type="submit">Upload CSV</button>
-    </form>
-    <p id="status"></p>
+<body class="pic">
+
+  <nav class="navbar">
+    <a href="#" class="logo">
+        <img src="Assets/logo f.png" alt="">
+        <h2>  CyMunio <br>
+           <span>Where Security Meets Innovation</span> 
+        </h2>
+    </a>
+    <ul class="nav-links">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Get Support</a></li>
+    </ul>
+   
+    <div class="logout">
+        <button><a href="index.html">Logout</a></button>
+    </div>
+     
+</nav>
+<div class="conter">
+  <aside class="debar">
+    <div class="profile">
+        <img id="profile-img" src="Assets/profile.jpeg" alt="Profile Picture" class="profile-img">
+        <input type="file" id="upload-pic" accept="image/*" style="display:none;">
+        <label for="upload-pic" class="upload-btn">Change</label>
+        <h2 class="username">John Doe</h2>
+    </div>
+      <nav class="side-nav">
+          <ul>
+              <li><a href="#manage-profile">Profile</a></li>
+              <li><a href="#payment-history">Payment History</a></li>
+              <li><a href="#notifications">Notifications</a></li>
+          </ul>
+          <button id="theme-toggle">Dark Theme</button>
+      </nav>
+  </aside>
+  <main class="content">
+      <section id="manage-profile">
+          <h1>Manage Profile</h1>
+          <!-- Form for managing profile -->
+          <div class="profile-settings">
+            <div class="profile-header">
+            </div>
+            <div class="profile-content">
+               
+                <div class="profile-info-section">
+                    <h3>Contact Information</h3>
+                    <form id="profile-info-form">
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact Number:</label>
+                            <input type="tel" id="contact" name="contact" placeholder="Enter your contact number">
+                        </div>
+                        <button type="submit" class="submit-btn">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </section>
+      <section id="payment-history">
+          <h1>Payment History</h1>
+          <p>View your payment history and download receipts.</p>
+          <!-- Payment history content -->
+      </section>
+      <section id="notifications">
+          <h1>Notifications</h1>
+          <p>Manage your notification preferences.</p>
+          <!-- Notifications content -->
+      </section>
+  </main>
 </div>
+
+<script src="profile.js"></script>
   <script src="upload.js"></script>
+
 </body>
 </html>

@@ -86,4 +86,51 @@ function slideCards() {
 // Slide every 5 seconds
 setInterval(slideCards, 4000);
 
+document.addEventListener('DOMContentLoaded', () => {
+    const dropButton = document.getElementById('drop');
+    const authContainer = document.getElementById('auth-container');
 
+    if (dropButton && authContainer) {
+        dropButton.addEventListener('click', () => {
+            if (authContainer.classList.contains('show')) {
+                authContainer.classList.remove('show');
+                setTimeout(() => {
+                    authContainer.style.display = 'none';
+                }, 500); // Match the duration of the CSS transition
+            } else {
+                authContainer.style.display = 'block'; // Ensure it's visible before applying opacity
+                setTimeout(() => {
+                    authContainer.classList.add('show');
+                }, 1); // Slight delay to ensure display change is registered
+            }
+        });
+    } else {
+        console.error('Drop button or auth container not found.');
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // Select form-related DOM elements
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+
+    // Form Switcher Functionality
+    if (loginBtn && signupBtn && loginForm && signupForm) {
+        loginBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default action
+            loginForm.classList.add('active');
+            signupForm.classList.remove('active');
+            loginBtn.classList.add('active');
+            signupBtn.classList.remove('active');
+        });
+
+        signupBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default action
+            signupForm.classList.add('active');
+            loginForm.classList.remove('active');
+            signupBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+        });
+    }
+});

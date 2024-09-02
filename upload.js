@@ -1,31 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select DOM elements
+    const profileImg = document.getElementById('profile-img');
+    const uploadPic = document.getElementById('upload-pic');
     const connectWalletButton = document.getElementById('connectWalletBtn');
     const uploadForm = document.getElementById('uploadForm');
-    const csvFileInput = document.getElementById('csvFileInput');
     const statusElement = document.getElementById('status');
     const registerBtn = document.getElementById('register-btn');
-    const loginBtn = document.getElementById('login-btn');
-    const signupBtn = document.getElementById('signup-btn');
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
+    const loginSubmit = document.getElementById('login-btn-submit');
+    const fullNameInput = document.getElementById('fullName');
+    const emailInput = document.getElementById('email');
     const usernameInput = document.getElementById('registerUsername');
     const passwordInput = document.getElementById('registerPassword');
     const loginUsernameInput = document.getElementById('loginUsername');
     const loginPasswordInput = document.getElementById('loginPassword');
 
-    // Function to hash passwords
-    function hashPassword(password) {
-        return CryptoJS.SHA256(password).toString();
+    const arweave = Arweave.init({
+        host: 'arweave.net',
+        port: 443,
+        protocol: 'https',
+    });
+
+    const restrictedWalletAddress = 'E1uqzciYEDoanN4mnDGqfRzdztq0rMnHsvOb5fUYys0'; // Wallet address to restrict
+
+    // Generate a random salt
+    function generateSalt() {
+        return CryptoJS.lib.WordArray.random(16).toString();
     }
 
-    // Function to ensure wallet is connected
+    // Derive a secure key using PBKDF2
+    function deriveKey(password, salt) {
+        return CryptoJS.PBKDF2(password, salt, {
+            keySize: 256 / 32, // 256-bit key
+            iterations: 10000 // High number of iterations for better security
+        }).toString();
+    }
+
+    // AES Encryption function using derived key
+    function encryptData(data, derivedKey) {
+        return CryptoJS.AES.encrypt(data, derivedKey).toString();
+    }
+
+    // AES Decryption function using derived key
+    function decryptData(cipherText, derivedKey) {
+        const bytes = CryptoJS.AES.decrypt(cipherText, derivedKey);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
     async function ensureWalletConnected() {
         if (window.arweaveWallet) {
             try {
+                const requiredPermissions = ['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'];
                 const permissions = await window.arweaveWallet.getPermissions();
-                if (!permissions.includes('ACCESS_ADDRESS') || !permissions.includes('SIGN_TRANSACTION')) {
-                    await window.arweaveWallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION']);
+                const missingPermissions = requiredPermissions.filter(permission => !permissions.includes(permission));
+                if (missingPermissions.length > 0) {
+                    await window.arweaveWallet.connect(requiredPermissions);
+                }
+
+                // Verify the connected wallet address
+                const walletAddress = await window.arweaveWallet.getActiveAddress();
+                if (walletAddress === restrictedWalletAddress) {
+                    alert('This wallet address is restricted from accessing the dashboard.');
+                    throw new Error('Restricted wallet address.');
                 }
             } catch (error) {
                 console.error('Error connecting to Arweave wallet:', error);
@@ -38,56 +72,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to sign the transaction with Arweave Wallet
-    async function signTransaction(transaction) {
-        try {
-            await window.arweaveWallet.sign(transaction);
-            // Optional: Add a check to confirm that the transaction is signed
-            if (!transaction.signature) {
-                throw new Error('Transaction was not signed successfully.');
-            }
-        } catch (error) {
-            console.error('Error signing transaction:', error);
-            alert('Failed to sign the transaction. Please ensure your wallet is connected.');
-            throw error;
-        }
-    }
-
-    // Function to connect wallet, sign transaction, and register
-    async function connectSignAndRegister(username, password) {
+    async function connectSignAndRegister(fullName, email, username, password) {
         try {
             await ensureWalletConnected();
 
-            const arweave = Arweave.init();
-            const hashedPassword = hashPassword(password);
+            // Generate a unique salt for the user
+            const salt = generateSalt();
 
-            const transaction = await arweave.createTransaction({
-                data: JSON.stringify({ username, password: hashedPassword }),
+            // Derive a secure encryption key from the password and salt
+            const derivedKey = deriveKey(password, salt);
+
+            // Encrypt user data using the derived key
+            const encryptedFullName = encryptData(fullName.trim(), derivedKey);
+            const encryptedEmail = encryptData(email.trim(), derivedKey);
+            const encryptedPassword = encryptData(password.trim(), derivedKey);
+
+            const data = JSON.stringify({
+                fullName: encryptedFullName,
+                email: encryptedEmail,
+                username: username.trim(),
+                password: encryptedPassword,
+                salt: salt // Store the salt alongside the encrypted data
             });
+
+            const transaction = await arweave.createTransaction({ data });
+            console.log('Created transaction:', transaction);
 
             transaction.addTag('Content-Type', 'application/json');
             transaction.addTag('App-Name', 'Arweave-Auth');
-            transaction.addTag('Username', username);
+            transaction.addTag('Username', username.trim());
 
-            // Sign the transaction
             await signTransaction(transaction);
 
-            // Post the transaction
-            const response = await arweave.transactions.post(transaction);
+            // Dispatch the transaction using ArConnect
+            await window.arweaveWallet.dispatch(transaction);
+            console.log('Transaction dispatched:', transaction);
 
-            if (response.status === 200) {
-                alert('Registration successful!');
-                window.location.href = '/profile.html'; // Redirect to user profile page
-            } else {
-                statusElement.textContent = 'Failed to register.';
-            }
+            alert('Registration successful!');
+
         } catch (error) {
             console.error('Error during registration:', error);
             statusElement.textContent = 'Error during registration. Check console for details.';
         }
     }
 
-    // Handle Wallet Connection
+    async function signTransaction(transaction) {
+        try {
+            console.log('Transaction before signing:', transaction);
+            await arweave.transactions.sign(transaction);
+            if (!transaction.signature || transaction.signature.length === 0) {
+                throw new Error('Transaction was not signed successfully.');
+            }
+            console.log('Transaction successfully signed:', transaction);
+        } catch (error) {
+            console.error('Error signing transaction:', error);
+            alert('Failed to sign the transaction. Please ensure your wallet is connected and permissions are granted.');
+            throw error;
+        }
+    }
+
+    // Check if elements exist before adding event listeners
     if (connectWalletButton) {
         connectWalletButton.addEventListener('click', async () => {
             try {
@@ -101,39 +145,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Handle Registration
-    if (registerBtn && usernameInput && passwordInput) {
-        registerBtn.addEventListener('click', () => {
+    if (registerBtn && fullNameInput && emailInput && usernameInput && passwordInput) {
+        registerBtn.addEventListener('click', async () => {
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim();
             const username = usernameInput.value.trim();
             const password = passwordInput.value.trim();
 
-            if (username === '' || password === '') {
-                statusElement.textContent = 'Please fill in both fields.';
+            if (fullName === '' || email === '' || username === '' || password === '') {
+                statusElement.textContent = 'Please fill all required fields.';
                 return;
             }
-
-            connectSignAndRegister(username, password);
+            await connectSignAndRegister(fullName, email, username, password);
         });
     }
-// Form Switcher Functionality
-if (loginBtn && signupBtn && loginForm && signupForm) {
-    loginBtn.addEventListener('click', () => {
-        loginForm.classList.add('active');
-        signupForm.classList.remove('active');
-        loginBtn.classList.add('active');
-        signupBtn.classList.remove('active');
-    });
 
-    signupBtn.addEventListener('click', () => {
-        signupForm.classList.add('active');
-        loginForm.classList.remove('active');
-        signupBtn.classList.add('active');
-        loginBtn.classList.remove('active');
-    });
-}
-    // Handle Login
-    if (loginBtn && loginUsernameInput && loginPasswordInput) {
-        loginBtn.addEventListener('click', async () => {
+    if (loginSubmit && loginUsernameInput && loginPasswordInput) {
+        loginSubmit.addEventListener('click', async () => {
             const username = loginUsernameInput.value.trim();
             const password = loginPasswordInput.value.trim();
 
@@ -142,12 +170,9 @@ if (loginBtn && signupBtn && loginForm && signupForm) {
                 return;
             }
 
-            const hashedPassword = hashPassword(password);
-
             try {
                 await ensureWalletConnected();
 
-                const arweave = Arweave.init();
                 const query = {
                     op: 'and',
                     expr1: {
@@ -173,9 +198,19 @@ if (loginBtn && signupBtn && loginForm && signupForm) {
                 const transactionData = await arweave.transactions.getData(transactionId, { decode: true, string: true });
                 const userData = JSON.parse(transactionData);
 
-                if (userData.password === hashedPassword) {
-                    alert(`Login successful! Welcome, ${username}`);
-                    window.location.href = '/profile.html'; // Redirect to user profile page
+                // Retrieve the salt from stored data
+                const salt = userData.salt;
+
+                // Derive the key using the entered password and the retrieved salt
+                const derivedKey = deriveKey(password, salt);
+
+                // Decrypt the stored password
+                const decryptedPassword = decryptData(userData.password, derivedKey);
+
+                if (decryptedPassword === password) {
+                    // Store the logged-in username in localStorage or session
+                    localStorage.setItem('loggedInUser', username);
+                    window.location.href = `/profile.html?username=${encodeURIComponent(username)}`;
                 } else {
                     statusElement.textContent = 'Incorrect password.';
                 }
@@ -184,5 +219,35 @@ if (loginBtn && signupBtn && loginForm && signupForm) {
                 statusElement.textContent = 'Error during login. Check console for details.';
             }
         });
+    }
+
+    // Profile page script
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        // Load the saved profile picture
+        const savedPic = localStorage.getItem(`profilePic_${loggedInUser}`);
+        if (savedPic) {
+            profileImg.src = savedPic;
+        }
+
+        // Handle profile picture upload
+        if (uploadPic) {
+            uploadPic.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = (e) => {
+                        // Update the profile image
+                        profileImg.src = e.target.result;
+
+                        // Save the new profile image to localStorage with the user ID
+                        localStorage.setItem(`profilePic_${loggedInUser}`, e.target.result);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     }
 });

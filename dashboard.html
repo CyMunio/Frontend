@@ -248,7 +248,14 @@
                 </div>
         </main>
     </div>
-    
+    <div id="upload-container">
+        <button id="connectWalletBtn">Connect Wallet</button>
+        <form id="uploadForm" class="hidden">
+            <input type="file" id="csvFileInput" accept=".csv" required>
+            <button type="submit">Upload CSV</button>
+        </form>
+        <p id="status"></p>
+    </div>
     <script src="dashboard.js" defer></script>
 </body>
 </html>
